@@ -29,8 +29,16 @@ def ed25519_to_wg(raw_sk: bytes) -> str:
 
 async def main():
     outdir = sys.argv[1] if len(sys.argv) > 1 else "dist"
-    s = Session(appversion="linux-vpn@4.11.0",
-                user_agent="ProtonVPN/4.11.0 (Linux; Ubuntu/24.04)")
+        # 使用目前最新的官方客户端版本号，并强制指定兼容的 UA
+    app_version = "linux-vpn@5.0.0"
+    user_agent = "ProtonVPN/5.0.0 (Linux; Ubuntu/24.04)"
+    
+    s = Session(appversion=app_version, user_agent=user_agent)
+    
+    # 强制修正底层可能会带上的旧版本头（防止库内部写死了旧版本）
+    if hasattr(s, "_appversion"):
+        s._appversion = app_version
+
 
     if not await s.async_authenticate(os.environ["PROTON_USER"],
                                       os.environ["PROTON_PASS"]):
