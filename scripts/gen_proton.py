@@ -29,8 +29,8 @@ def ed25519_to_wg(raw_sk: bytes) -> str:
 
 async def main():
     outdir = sys.argv[1] if len(sys.argv) > 1 else "dist"
-    s = Session(appversion="linux-vpn@4.8.2",
-                user_agent="ProtonVPN/4.8.2 (Linux; Ubuntu/24.04)")
+    s = Session(appversion="linux-vpn@4.9.1",
+                user_agent="ProtonVPN/4.9.1 (Linux; Ubuntu/24.04)")
 
     if not await s.async_authenticate(os.environ["PROTON_USER"],
                                       os.environ["PROTON_PASS"]):
